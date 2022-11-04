@@ -56,5 +56,7 @@ function populateForm() {
   if (savedFormData) {
     refs.input.value = savedFormData.email;
     refs.textarea.value = savedFormData.message;
+    formData.email = savedFormData.email;
+    formData.message = savedFormData.message;
   }
 }
