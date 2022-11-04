@@ -25,8 +25,7 @@ refs.form.addEventListener('submit', onFormSubmit);
 refs.form.addEventListener('input', throttle(onFormInput, 500));
 
 let formData = {};
-refs.input.value = '';
-refs.textarea.value = '';
+
 populateForm();
 
 function onFormSubmit(evt) {
@@ -65,8 +64,8 @@ function populateForm() {
   //   console.log(savedFormData.message);
 
   if (savedFormData) {
-    refs.input.value = savedFormData.email;
-    refs.textarea.value = savedFormData.message;
+    refs.input.value = savedFormData.email || '';
+    refs.textarea.value = savedFormData.message || '';
     formData.email = savedFormData.email;
     formData.message = savedFormData.message;
   }
