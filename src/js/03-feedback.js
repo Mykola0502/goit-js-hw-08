@@ -25,7 +25,8 @@ refs.form.addEventListener('submit', onFormSubmit);
 refs.form.addEventListener('input', throttle(onFormInput, 500));
 
 let formData = {};
-
+refs.input.value = '';
+refs.textarea.value = '';
 populateForm();
 
 function onFormSubmit(evt) {
@@ -38,13 +39,13 @@ function onFormSubmit(evt) {
 }
 
 function onFormInput(evt) {
-  if (evt.target.value) {
-    formData[evt.target.name] = evt.target.value;
-  } else {
-    formData[evt.target.name] = '';
-  }
+  //   if (evt.target.value) {
+  //     formData[evt.target.name] = evt.target.value;
+  //   } else {
+  //     formData[evt.target.name] = '';
+  //   }
 
-  //   formData[evt.target.name] = evt.target.value;
+  formData[evt.target.name] = evt.target.value;
 
   console.log(formData);
 
