@@ -31,14 +31,20 @@ populateForm();
 function onFormSubmit(evt) {
   evt.preventDefault();
 
-  console.log('Отправляем форму');
+  console.log('Відправляємо форму');
 
   evt.currentTarget.reset();
   localStorage.removeItem(STORAGE_KEY);
 }
 
 function onFormInput(evt) {
-  formData[evt.target.name] = evt.target.value;
+  if (evt.target.value) {
+    formData[evt.target.name] = evt.target.value;
+  } else {
+    formData[evt.target.name] = '';
+  }
+
+  //   formData[evt.target.name] = evt.target.value;
 
   console.log(formData);
 
@@ -48,10 +54,14 @@ function onFormInput(evt) {
 }
 
 function populateForm() {
+  //   refs.input.value = '';
+  //   refs.textarea.value = '';
   const savedstringFormData = localStorage.getItem(STORAGE_KEY);
   const savedFormData = JSON.parse(savedstringFormData);
 
-  console.log(savedFormData);
+  //   console.log(savedFormData);
+  //   console.log(savedFormData.email);
+  //   console.log(savedFormData.message);
 
   if (savedFormData) {
     refs.input.value = savedFormData.email;
