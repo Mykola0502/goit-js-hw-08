@@ -94,7 +94,7 @@ import '../css/common.css';
 //   console.log(savedstringFormData);
 
 //   if (savedstringFormData) {
-//     formData = JSON.parse(savedstringFormData || {});
+//     formData = JSON.parse(savedstringFormData);
 //     console.log(formData);
 //     formEl.elements.email.value = formData.email;
 //     formEl.elements.message.value = formData.message;
