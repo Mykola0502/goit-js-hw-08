@@ -1,12 +1,13 @@
 import Player from '@vimeo/player';
 import throttle from 'lodash.throttle';
 
-const STORAGE_KEY = 'videoplayer - current - time';
-
 const iframe = document.querySelector('iframe');
 const player = new Player(iframe);
 
+const STORAGE_KEY = 'videoplayer - current - time';
+
 restorePlayer();
+
 player.on('timeupdate', throttle(onTimeUpdate, 1000));
 
 // function onTimeUpdate() {
@@ -18,47 +19,32 @@ player.on('timeupdate', throttle(onTimeUpdate, 1000));
 //   });
 // }
 
-function onTimeUpdate(evt) {
-  const currentPos = evt.seconds;
-  const vdoEndTime = evt.duration;
-  const percentage = (evt.percent * 100).toFixed(2) + '%';
+function onTimeUpdate(data) {
+  const currentPos = data.seconds;
+  const vdoEndTime = data.duration;
+  const percentage = (data.percent * 100).toFixed(2) + '%';
 
   //   console.log(currentPos);
   //   console.log(vdoEndTime);
   //   console.log(percentage);
 
-  localStorage.setItem(STORAGE_KEY, currentPos);
+  const currentPosOnStringify = JSON.stringify(currentPos);
+
+  localStorage.setItem(STORAGE_KEY, currentPosOnStringify);
 }
 
 function restorePlayer() {
-  const savedPos = localStorage.getItem(STORAGE_KEY);
-  const jsonSavedPos = JSON.parse(savedPos);
-  console.log(jsonSavedPos);
-  console.log(typeof jsonSavedPos);
+  const savedPosOnStringify = localStorage.getItem(STORAGE_KEY);
+  console.log(savedPosOnStringify);
+  console.log(typeof savedPosOnStringify);
 
-  localStorage.removeItem(STORAGE_KEY);
+  if (savedPosOnStringify) {
+    const savedPos = JSON.parse(savedPosOnStringify);
 
-  if (savedPos) {
-    player
-      .setCurrentTime(savedPos)
-      .then(function (seconds) {
-        seconds = savedPos;
-      })
-      .catch(function (error) {
-        switch (error.name) {
-          case 'RangeError':
-            // the time was less than 0 or greater than the video’s duration
-            console.log(error.name);
-            console.log(error.message);
-            break;
+    console.log(savedPos);
+    console.log(typeof savedPos);
 
-          default:
-            // some other error occurred
-            console.log(error.name);
-            console.log(error.message);
-            break;
-        }
-      });
+    player.setCurrentTime(savedPos);
   }
 }
 
